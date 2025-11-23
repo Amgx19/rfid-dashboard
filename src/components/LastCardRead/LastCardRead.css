@@ -1,0 +1,66 @@
+/* src/components/LastCardRead/LastCardRead.css */
+.card-display {
+    background: linear-gradient(135deg, #eef2ff 0%, #dbeafe 100%);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.card-display.active {
+    animation: cardPulse 0.5s ease;
+}
+
+.card-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.card-uid {
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    color: #4f46e5;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.status-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.status-icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.status-icon.success {
+    color: #22c55e;
+}
+
+.status-icon.error {
+    color: #ef4444;
+}
+
+.status-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.status-text.success {
+    color: #16a34a;
+}
+
+.status-text.error {
+    color: #dc2626;
+}
+
+.status-text.idle {
+    color: #64748b;
+}
