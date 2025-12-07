@@ -19,8 +19,7 @@ const PORT = 3001;
 
 // تخزين البيانات
 let authorizedCards = [
-  { uid: "89-27-34-03", name: "أحمد محمد" },
-  { uid: "12-34-56-78", name: "سارة علي" }
+  { uid: "89-27-34-03", name: "أمجد زكريا" }
 ];
 let logs = [];
 let lastCard = null;
