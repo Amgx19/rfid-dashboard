@@ -1,3 +1,25 @@
+## RFID-Based Smart Access Control System using ESP32 & Real-Time Dashboard
+# Project Overview:
+The project is a smart access control system يعتمد على قارئ RFID مدمج مع ESP32 للتعرّف على المستخدمين وإرسال بيانات البطاقات إلى خادم Node.js عبر WebSocket بشكل لحظي. يقوم الخادم بمعالجة البيانات، والتحقق من حالة المستخدم، ثم يعرض النتائج مباشرة في لوحة تحكم تفاعلية (Dashboard) تم بناؤها باستخدام React.
+المشروع يوفّر نظام متابعة دخول وخروج ذكي، مرتبط بواجهة ويب تعرض البطاقات المقروءة، حالة التحقق (Authorized / Unauthorized)، وإدارة البيانات بشكل كامل.
+
+# System Components:
+ESP32 + قارئ RFID MFRC522
+WiFi Communication
+Node.js Backend مع Socket.IO
+Real-time React Dashboard
+LCD I2C لعرض حالة البطاقة على الجهاز
+Automatic IP Discovery بين السيرفر والـ ESP32 عبر UDP Broadcast
+
+# Core Features:
+قراءة UID من بطاقات RFID عبر ESP32
+إرسال بيانات القراءة إلى السيرفر بشكل مباشر عبر WebSocket
+عرض الحالة على شاشة LCD (Authorized / Unauthorized)
+لوحة تحكم تفاعلية تعرض جميع القراءات لحظيًا
+تمييز المستخدم الـ Authorized والـ Unauthorized
+تخزين وتنظيم البيانات على السيرفر
+اكتشاف تلقائي للسيرفر بدون كتابة IP ثابت
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
