@@ -1,92 +1,199 @@
-## RFID-Based Smart Access Control System using ESP32 & Real-Time Dashboard
-# Project Overview:
-The project is a smart access control system يعتمد على قارئ RFID مدمج مع ESP32 للتعرّف على المستخدمين وإرسال بيانات البطاقات إلى خادم Node.js عبر WebSocket بشكل لحظي. يقوم الخادم بمعالجة البيانات، والتحقق من حالة المستخدم، ثم يعرض النتائج مباشرة في لوحة تحكم تفاعلية (Dashboard) تم بناؤها باستخدام React.
-المشروع يوفّر نظام متابعة دخول وخروج ذكي، مرتبط بواجهة ويب تعرض البطاقات المقروءة، حالة التحقق (Authorized / Unauthorized)، وإدارة البيانات بشكل كامل.
+<div align="center">
 
-# System Components:
-ESP32 + قارئ RFID MFRC522
-WiFi Communication
-Node.js Backend مع Socket.IO
-Real-time React Dashboard
-LCD I2C لعرض حالة البطاقة على الجهاز
-Automatic IP Discovery بين السيرفر والـ ESP32 عبر UDP Broadcast
+# 🔐 RFID Smart Access Control System
 
-# Core Features:
-قراءة UID من بطاقات RFID عبر ESP32
-إرسال بيانات القراءة إلى السيرفر بشكل مباشر عبر WebSocket
-عرض الحالة على شاشة LCD (Authorized / Unauthorized)
-لوحة تحكم تفاعلية تعرض جميع القراءات لحظيًا
-تمييز المستخدم الـ Authorized والـ Unauthorized
-تخزين وتنظيم البيانات على السيرفر
-اكتشاف تلقائي للسيرفر بدون كتابة IP ثابت
+**A real-time, full-stack IoT access control system built with ESP32, Node.js, and React.**
 
-# Getting Started with Create React App
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-Backend-339933?style=flat-square&logo=node.js)](https://nodejs.org/)
+[![ESP32](https://img.shields.io/badge/ESP32-Firmware-E7352C?style=flat-square&logo=espressif)](https://www.espressif.com/)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-Realtime-010101?style=flat-square&logo=socket.io)](https://socket.io/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](./LICENSE)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+</div>
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 📖 Overview
 
-### `npm start`
+This project is a **Smart Access Control System** that uses RFID technology with an ESP32 microcontroller to identify users and grant or deny access in real time. Card scan data is transmitted to a Node.js server via **WebSocket**, processed instantly, and displayed on an interactive **React Dashboard** — no manual IP configuration required.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> 🎓 Originally conceived as a personal project during an IoT course at the **University of Baha**, this system was driven purely by passion — particularly an interest in how enterprise-grade systems like **GRMS (Guest Room Management Systems)** handle smart access control at scale. It was completed and polished post-graduation.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🏗️ System Architecture
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+┌─────────────────────┐       WebSocket        ┌──────────────────────┐
+│   ESP32 + MFRC522   │ ─────────────────────► │   Node.js Backend    │
+│   RFID Reader       │                         │   + Socket.IO        │
+│   LCD I2C Display   │ ◄───────────────────── │   Data Validation    │
+└─────────────────────┘    Auth Response         └──────────┬───────────┘
+                                                            │ Socket.IO
+                                                            ▼
+                                                 ┌──────────────────────┐
+                                                 │   React Dashboard    │
+                                                 │   Real-time UI       │
+                                                 └──────────────────────┘
+```
 
-### `npm run build`
+**Auto-Discovery via UDP Broadcast** — The ESP32 discovers the server IP automatically on the local network. No hardcoded IP addresses needed.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## ✨ Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🖥️ Dashboard (Frontend)
+| Feature | Description |
+|---|---|
+| 🌙 **Dark Mode** | Full dark/light mode toggle |
+| ⚡ **Real-time Updates** | Every RFID scan appears instantly via Socket.IO |
+| ✅ **Access Status** | Clear visual distinction between `Authorized` and `Unauthorized` |
+| 📊 **Entry Statistics** | Per-card access count and history |
+| ➕ **Card Management** | Add trusted cards with a cardholder name |
+| 🗑️ **Card Removal** | Remove access privileges instantly |
+| 🛡️ **Input Validation** | Validates UID format and cardholder name before saving |
 
-### `npm run eject`
+### ⚙️ Hardware & Firmware
+- **ESP32** reads RFID UIDs via **MFRC522** module
+- **LCD I2C** displays `Authorized ✓` or `Unauthorized ✗` directly on the device
+- **UDP Broadcast** for automatic server discovery — plug and play
+- **WebSocket** communication for low-latency, bidirectional data flow
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 🗄️ Backend
+- **Node.js** server with **Socket.IO** for real-time event handling
+- Card authorization logic and data persistence
+- Broadcasts access events to all connected dashboard clients
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🛠️ Tech Stack
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+| Layer | Technology |
+|---|---|
+| Microcontroller | ESP32 |
+| RFID Module | MFRC522 |
+| Display | LCD I2C (16x2) |
+| Firmware Language | C++ (Arduino Framework) |
+| Backend | Node.js + Socket.IO |
+| Frontend | React + Tailwind CSS |
+| Communication | WebSocket + UDP Broadcast |
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📁 Project Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+rfid-dashboard/
+├── ESP32-WiFi-MQTT/       # Arduino/C++ firmware for ESP32
+│   └── main.ino           # WiFi, RFID, LCD, WebSocket logic
+├── backend/               # Node.js server
+│   └── server.js          # Socket.IO, UDP broadcast, card management
+├── src/                   # React frontend source
+│   ├── components/        # Dashboard UI components
+│   └── App.js             # Main app entry
+├── public/                # Static assets
+├── package.json
+└── tailwind.config.js
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🚀 Getting Started
 
-### Analyzing the Bundle Size
+### Prerequisites
+- Node.js v18+
+- Arduino IDE (with ESP32 board support)
+- ESP32 dev board + MFRC522 + LCD I2C (16x2)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Amgx19/rfid-dashboard.git
+cd rfid-dashboard
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 2. Start the Backend
+```bash
+cd backend
+npm install
+node server.js
+```
+> The backend listens on port `3001` and broadcasts its IP via UDP so the ESP32 can find it automatically.
 
-### Advanced Configuration
+### 3. Start the Frontend
+```bash
+# From the root directory
+npm install
+npm start
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 4. Flash the ESP32
+1. Open `ESP32-WiFi-MQTT/main.ino` in Arduino IDE
+2. Set your **WiFi SSID and password** in the config section
+3. Upload to your ESP32 board
+4. The device will auto-discover the server IP on the local network
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🔌 Hardware Wiring
 
-### `npm run build` fails to minify
+### MFRC522 → ESP32
+| MFRC522 Pin | ESP32 Pin |
+|---|---|
+| SDA (SS) | GPIO 5 |
+| SCK | GPIO 18 |
+| MOSI | GPIO 23 |
+| MISO | GPIO 19 |
+| RST | GPIO 27 |
+| 3.3V | 3.3V |
+| GND | GND |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### LCD I2C → ESP32
+| LCD Pin | ESP32 Pin |
+|---|---|
+| SDA | GPIO 21 |
+| SCL | GPIO 22 |
+| VCC | 5V |
+| GND | GND |
+
+---
+
+## 📸 Dashboard Preview
+
+> The dashboard supports dark mode, real-time card scan logs, access statistics, and full card management — all updating live without page refresh.
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Database persistence (MongoDB / SQLite)
+- [ ] Multi-door / multi-reader support
+- [ ] Role-based access levels (Admin, Guest, Staff)
+- [ ] Mobile-responsive dashboard improvements
+- [ ] MQTT protocol support as an alternative to WebSocket
+- [ ] Notification system (email / SMS on unauthorized access)
+
+---
+
+## 🤖 AI-Assisted Development
+
+This project was built with the help of AI tools to accelerate productivity — not to replace thinking. AI was used for generating boilerplate, reviewing code logic, and suggesting architectural improvements. All system design decisions, hardware integration, and feature choices were made independently.
+
+---
+
+## 👤 Author
+
+**Amgx19**
+- 🎓 Computer Engineering Graduate — University of Baha
+- 💡 Passionate about IoT, Embedded Systems & Smart Infrastructure
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ and curiosity — from a course project to a complete system.</sub>
+</div>
